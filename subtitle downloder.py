@@ -4,9 +4,9 @@ from bs4 import BeautifulSoup
 home = "https://yts-subs.com"
 
 # included
-start_page = 250
-end_page = 250
-end_page+=1
+start_page = 251
+end_page = 260
+end_page += 1
 
 print(f"starting program for page {start_page} to {end_page} ")
 
