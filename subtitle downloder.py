@@ -3,8 +3,11 @@ import requests, zipfile, io
 from bs4 import BeautifulSoup
 home = "https://yts-subs.com"
 
-start_page = 240
-end_page = 241
+# included
+start_page = 250
+end_page = 250
+end_page+=1
+
 print(f"starting program for page {start_page} to {end_page} ")
 
 page_link = []
@@ -14,6 +17,17 @@ for j, i in enumerate(range(start_page, end_page)):
 
     source=requests.get(link).text
     soup = BeautifulSoup(source, "lxml")
+
+
+    # find names of movie.
+    name = soup.findAll("h3", class_="media-heading")
+    name = [i.text for i in name]
+    
+    with open("name of all movies subtitle downloaded.txt", "a") as write_name:
+        write_name.write("\n"+", ".join(name))
+
+    print(f"movie names are {name} \n written")
+    
 
     page_link_block = soup.findAll("li", class_="media")
     for k in page_link_block:
@@ -59,13 +73,13 @@ for j, i in enumerate(zip_link):
     try:
         r = requests.get(i)
         z = zipfile.ZipFile(io.BytesIO(r.content))
-        z.extractall("D:\Coding\Python\\test\\random")
+        z.extractall("D:\Coding\Python\words\scripted download after 200")
         print(f"{j+1} out of {length} file saved")
     except:
         # input("we got an error")
         err+=1
 
 print("All Done")
-print(err)
+print("eror = ",err)
 
 
