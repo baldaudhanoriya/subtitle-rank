@@ -4,8 +4,8 @@ from bs4 import BeautifulSoup
 home = "https://yts-subs.com"
 
 # included
-start_page = 251
-end_page = 260
+start_page = 301
+end_page = 310
 end_page += 1
 
 print(f"starting program for page {start_page} to {end_page} ")
@@ -41,22 +41,26 @@ length = len(page_link)
 # input(f"\ntotal links = {length} \nshould be go for it ")
 
 
-link_for_english=[]
-for j, i in enumerate(page_link):
+link_for_english = []
 
-    source=requests.get(i).text
-    soup = BeautifulSoup(source, "lxml")
-    all_language = soup.findAll("span", class_="sub-lang")
+try:  # if english didn't found
+    for j, i in enumerate(page_link):
 
-    for index, word in enumerate(all_language):
-        if word.text=="English":
-            index_for_english = index
-            break
+        source=requests.get(i).text
+        soup = BeautifulSoup(source, "lxml")
+        all_language = soup.findAll("span", class_="sub-lang")
 
-    all_language_link = soup.findAll("a", class_="subtitle-download")
-    link_for_english.append(home + all_language_link[index_for_english]["href"])
-    
-    print(f"{j+1} out of {length} English subtitle page link found")
+        for index, word in enumerate(all_language):
+            if word.text=="English":
+                index_for_english = index
+                break
+
+        all_language_link = soup.findAll("a", class_="subtitle-download")
+        link_for_english.append(home + all_language_link[index_for_english]["href"])
+        
+        print(f"{j+1} out of {length} English subtitle page link found")
+except:
+    pass
 
 zip_link = []
 for j, i in enumerate(link_for_english):
