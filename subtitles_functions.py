@@ -30,7 +30,7 @@ def main(temp, known_words, length, prefix, suffix):
     not_removed, repeated = [], {}
     for j, i in enumerate(temp.copy()):
         if not j % 10:
-            print(j * 100 // length)
+            print(f"\r processing {j * 100 // length}{str('%')} complect.", end="")
         for j in prefix:
             for k in suffix:
 
